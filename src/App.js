@@ -26,7 +26,7 @@ const Test = () => {
           <Button
             style={styles.button}
             title="Dismiss"
-            onClick={toggleNotify}
+            onPress={toggleNotify}
           />
         </View>
       )}
