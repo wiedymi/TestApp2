@@ -4,17 +4,17 @@ import {StyleSheet, Text, View, Button, AppState} from 'react-native';
 const Test = () => {
   const [notify, setNotify] = useState(false);
 
-  const toggleNotify = useCallback(() => {
-    setNotify(!notify);
-  }, [setNotify, notify]);
+  const onDismiss = useCallback(() => {
+    setNotify(false);
+  }, [setNotify]);
 
   const handleChange = useCallback(
     state => {
       if (!notify && state !== 'active') {
-        toggleNotify();
+        setNotify(true);
       }
     },
-    [notify, toggleNotify],
+    [notify, setNotify],
   );
 
   useEffect(() => {
@@ -32,11 +32,7 @@ const Test = () => {
           <Text style={styles.label}>
             Don't forgot to save the changes Your did
           </Text>
-          <Button
-            style={styles.button}
-            title="Dismiss"
-            onPress={toggleNotify}
-          />
+          <Button style={styles.button} title="Dismiss" onPress={onDismiss} />
         </View>
       )}
       <Text style={styles.label}>Some UI would be here...</Text>
