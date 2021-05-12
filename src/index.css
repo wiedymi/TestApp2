@@ -16,7 +16,15 @@ code {
 html,
 body {
   height: 100%;
+  box-sizing: border-box;
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* These styles disable body scrolling if you are using <ScrollView> */
 body {
   overflow: hidden;
@@ -25,4 +33,6 @@ body {
 #root {
   display: flex;
   height: 100%;
+  width: 360px;
+  margin: 0 auto;
 }
