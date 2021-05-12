@@ -2,6 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {StyleSheet, Text, View, Button, Platform, AppState} from 'react-native';
 
 const isWeb = Platform.OS === 'web';
+const appState = isWeb ? window : AppState;
 
 const Test = () => {
   const [notify, setNotify] = useState(false);
@@ -11,11 +12,10 @@ const Test = () => {
   }, [notify]);
 
   useEffect(() => {
-    const eventer = isWeb ? window : AppState;
-    eventer.addEventListener('blur', toggleNotify);
+    appState.addEventListener('blur', toggleNotify);
 
     return () => {
-      eventer.removeEventListener('blur', toggleNotify);
+      appState.removeEventListener('blur', toggleNotify);
     };
   }, [toggleNotify]);
 
