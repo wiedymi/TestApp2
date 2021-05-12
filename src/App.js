@@ -1,23 +1,29 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {StyleSheet, Text, View, Button, Platform, AppState} from 'react-native';
-
-const isWeb = Platform.OS === 'web';
-const appState = isWeb ? window : AppState;
+import {StyleSheet, Text, View, Button, AppState} from 'react-native';
 
 const Test = () => {
   const [notify, setNotify] = useState(false);
 
   const toggleNotify = useCallback(() => {
     setNotify(!notify);
-  }, [notify]);
+  }, [setNotify, notify]);
+
+  const handleChange = useCallback(
+    state => {
+      if (!notify && state !== 'active') {
+        toggleNotify();
+      }
+    },
+    [notify, toggleNotify],
+  );
 
   useEffect(() => {
-    appState.addEventListener('blur', toggleNotify);
+    AppState.addEventListener('change', handleChange);
 
     return () => {
-      appState.removeEventListener('blur', toggleNotify);
+      AppState.removeEventListener('change', handleChange);
     };
-  }, [toggleNotify]);
+  }, [handleChange]);
 
   return (
     <View style={styles.container}>
