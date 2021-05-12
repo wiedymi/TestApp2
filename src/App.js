@@ -1,29 +1,9 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {StyleSheet, Text, View, Button, AppState} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View, Button} from 'react-native';
+import {useBlurEffect} from './useBlurEffect';
 
 const Test = () => {
-  const [notify, setNotify] = useState(false);
-
-  const onDismiss = useCallback(() => {
-    setNotify(false);
-  }, [setNotify]);
-
-  const handleChange = useCallback(
-    state => {
-      if (!notify && state !== 'active') {
-        setNotify(true);
-      }
-    },
-    [notify, setNotify],
-  );
-
-  useEffect(() => {
-    AppState.addEventListener('change', handleChange);
-
-    return () => {
-      AppState.removeEventListener('change', handleChange);
-    };
-  }, [handleChange]);
+  const {notify, onDismiss} = useBlurEffect();
 
   return (
     <View style={styles.container}>
